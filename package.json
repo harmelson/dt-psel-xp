@@ -4,6 +4,7 @@
   "description": "Desafio técnico processo seletivo XP inc.",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
     "commit": "cz",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +31,8 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.20.0",
     "eslint-config-trybe-backend": "^1.0.4",
+    "eslint-config-trybe-fundamentals": "^1.1.1",
+    "eslint-plugin-sonarjs": "^0.14.0",
     "nodemon": "^2.0.19"
   },
   "config": {
