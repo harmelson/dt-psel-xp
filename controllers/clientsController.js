@@ -8,10 +8,10 @@ const clientsController = {
     res.status(200).json(client);
   },
   sumBalance: async (req, res) => {
-    const { codCliente, valor } = req.body;
-    await clientsService.sumBalance(codCliente, valor);
+    const { CodCliente, Valor } = req.body;
+    await clientsService.sumBalance(CodCliente, Valor);
 
-    res.status(200).json({ message: `R$${valor} foram adicionados na conta ${codCliente}` });
+    res.status(200).json({ message: `R$${Valor} foram adicionados na conta ${CodCliente}` });
   },
 };
 

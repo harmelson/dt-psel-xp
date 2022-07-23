@@ -6,6 +6,7 @@ const router = express.Router();
 
 router
   .get('/:id', clientsValidation.filterById, clientsController.findById)
-  .post('/deposito/:id', clientsController.sumBalance);
+  .post('/deposito',
+   clientsValidation.filterById, clientsValidation.depositValue, clientsController.sumBalance);
 
 module.exports = router;
