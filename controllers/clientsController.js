@@ -13,6 +13,12 @@ const clientsController = {
 
     res.status(200).json({ message: `R$${Valor} foram adicionados na conta ${CodCliente}` });
   },
+  subBalance: async (req, res) => {
+    const { CodCliente, Valor } = req.body;
+    await clientsService.subBalance(CodCliente, Valor);
+
+    res.status(200).json({ message: `R$${Valor} foram sacados da conta ${CodCliente}` });
+  },
 };
 
 module.exports = clientsController;

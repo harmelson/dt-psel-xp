@@ -3,11 +3,13 @@ const clientsService = require('../../services/clientsService');
 const clientsValidation = {
   filterById: async (req, res, next) => {
     const { id } = req.params;
-    const { CodCliente } = req.body;
+    const { CodCliente: codCliente } = req.body;
     const clients = await clientsService.findAll();
     const idExist = clients.some((e) => e.id === Number(id));
-    const codClienteExist = clients.some((e) => e.id === Number(CodCliente));
+    const codClienteExist = clients.some((e) => e.id === Number(codCliente));
     
+    if (!id && !codCliente) return res.status(400).json({ message: 'id/CodCliente não informado' });
+
     if (
       !idExist && !codClienteExist
     ) return res.status(404).json({ message: 'Cliente não encontrado' });
@@ -16,14 +18,33 @@ const clientsValidation = {
   },
 
   depositValue: (req, res, next) => {
-    const { Valor } = req.body;
-    const condition = Number(Valor) > 0;
+    const { Valor: valor } = req.body;
 
-    if (!condition) return res.status(400).json({ message: 'Valor deve ser maior que 0' });
+    if (Number(valor) <= 0) return res.status(400).json({ message: 'Valor deve ser maior que 0' });
 
     next();
   },
 
+  withdrawValue: async (req, res, next) => {
+    const { CodCliente: codCliente, Valor: valor } = req.body;
+    const { Saldo: saldo } = await clientsService.findById(codCliente);
+
+    if (!valor) return res.status(400).json({ message: 'Valor não informado' });
+
+    if (
+      typeof valor !== 'number'
+    ) return res.status(400).json({ message: 'Valor deve ser um número' });
+
+    if (Number(valor) <= 0) return res.status(400).json({ message: 'Valor deve ser maior que 0' });
+
+    if (valor > saldo) {
+      return res.status(400).json({ 
+            message: `Valor de saque maior que saldo em conta. Saldo atual R$${saldo}`, 
+      }); 
+    }
+
+    next();
+  },
 };
 
 module.exports = clientsValidation;

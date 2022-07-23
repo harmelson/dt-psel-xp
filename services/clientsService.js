@@ -19,6 +19,12 @@ const clientsService = {
     return sumBalance;
   },
 
+  subBalance: async (id, value) => {
+    // const { id: CodCliente, balance, currency } = await db.Client.findByPk(id);
+    const subBalance = await db.Client.increment({ balance: -value }, { where: { id } });
+    return subBalance;
+  },
+
 };
 
 module.exports = clientsService;
