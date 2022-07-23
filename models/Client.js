@@ -3,9 +3,10 @@ const createClientModel = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, primaryKey: true },
     firstName: DataTypes.STRING,
     lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
+    email: { type: DataTypes.STRING, validate: { unique: true } },
     password: DataTypes.STRING,
-    balance: DataTypes.FLOAT,
+    currency: DataTypes.STRING,
+    balance: DataTypes.DECIMAL,
   }, {
     underscored: true,
     timestamps: false,

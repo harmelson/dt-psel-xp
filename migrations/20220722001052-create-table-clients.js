@@ -15,7 +15,8 @@ module.exports = {
       lastName: { allowNull: false, type: Sequelize.STRING, field: 'last_name' },
       email: { allowNull: false, type: Sequelize.STRING },
       password: { allowNull: false, type: Sequelize.STRING },
-      balance: { allowNull: false, type: Sequelize.FLOAT(2) },
+      currency: { allowNull: false, type: Sequelize.STRING },
+      balance: { allowNull: false, type: Sequelize.DECIMAL(11, 2) },
     });
   },
 

@@ -5,6 +5,7 @@ const clients = [
   'last_name': 'Jhonson',
   email: 'charles.jhonson@email.com',
   password: '1234567',
+  currency: 'BRL',
   balance: 3500.06,
   },
   {
@@ -12,6 +13,7 @@ const clients = [
    'last_name': 'Son',
    email: 'lili.son@email.com',
    password: '1234567',
+   currency: 'BRL',
    balance: 24543.24,
   },
   {
@@ -19,6 +21,7 @@ const clients = [
     'last_name': 'Lee',
     email: 'jhon.lee@email.com',
     password: '1234567',
+    currency: 'BRL',
     balance: 4689.16,
   },
   {
@@ -26,6 +29,7 @@ const clients = [
     'last_name': 'Taylor',
     email: 'mirela.taylor@email.com',
     password: '1234567',
+    currency: 'BRL',
     balance: 49482.91,
   },
 ];
