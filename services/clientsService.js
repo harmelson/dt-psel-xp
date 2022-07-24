@@ -46,6 +46,28 @@ const clientsService = {
     });
   },
 
+  buyAsset: async (codCliente, codAtivo, qntdAtivo) => {
+    const asset = await assetsService.getByAssets(codAtivo);
+    const client = await assetsService.getByClient(codCliente);
+    const hasClientAsset = await client.find((el) => el.CodAtivo === codAtivo);
+    
+    // Subtrai valor total da compra da conta do cliente
+    await db.Client.increment({ balance: -(qntdAtivo * asset.ValorCompra) }, {
+      where: { id: codCliente },
+    });
+    // Se o cliente já possuir o ativo comprado, a quantidade é somada na carteira
+    if (hasClientAsset) {
+      await db.ClientAsset.increment({ assetQnt: qntdAtivo }, {
+        where: { clientId: codCliente, assetCode: codAtivo },
+      });
+    }
+    // Se o cliente não possuir o ativo comprado, o ativo é adicionado na tabela clients_assets
+    if (!hasClientAsset) {
+      await db.ClientAsset.create({ 
+        assetCode: codAtivo, clientId: codCliente, assetQnt: qntdAtivo, 
+      });
+    }
+  },
 };
 
 module.exports = clientsService;

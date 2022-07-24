@@ -8,8 +8,17 @@ const router = express.Router();
 router
   .post('/vender', 
   clientsValidation.filterById,
+  assetsValidation.verifyAssetExists,
   assetsValidation.filterGetByAssetCodeBody,
+  clientsValidation.qntdAtivoValidation,
   clientsValidation.sellAssetValidation, 
-  clientsController.sellAsset);
+  clientsController.sellAsset)
+  .post('/comprar', 
+  clientsValidation.filterById, 
+  assetsValidation.verifyAssetExists, 
+  clientsValidation.qntdAtivoValidation,
+  clientsValidation.buyAssetQuantityValidation, 
+  clientsValidation.qntdBuyValidation,
+  clientsController.buyAsset);
 
 module.exports = router;

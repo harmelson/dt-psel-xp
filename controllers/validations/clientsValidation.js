@@ -50,17 +50,48 @@ const clientsValidation = {
     next();
   },
 
+  qntdAtivoValidation: async (req, res, next) => {
+    const { QntdAtivo: qntdAtivo } = req.body;
+
+    if (!qntdAtivo) return res.status(400).json({ message: 'Quantidade de ativos não informado' });
+
+    next();
+  },
+
   sellAssetValidation: async (req, res, next) => {
     const { CodCliente: codCliente, CodAtivo: codAtivo, QntdAtivo: qntdAtivo } = req.body;
     const assets = await assetsService.getByClient(codCliente);
     const sellAsset = await assets.find((el) => el.CodAtivo === codAtivo);
 
-    if (!qntdAtivo) return res.status(400).json({ message: 'Quantidade de ativos não informado' });
-
     if (qntdAtivo > sellAsset.QtdeAtivo) {
       return res.status(400).json(
         { message: 'Quantidade a ser vendida não pode ser maior que quantidade em carteira' },
       ); 
+    }
+
+    next();
+  },
+
+  buyAssetQuantityValidation: async (req, res, next) => {
+    const { QntdAtivo: qntdAtivoCompra, CodAtivo: codAtivo } = req.body;
+    const { QtdeAtivo: qntdAtivoDisp } = await assetsService.getByAssets(codAtivo);
+
+    if (qntdAtivoCompra > qntdAtivoDisp) {
+      return res.status(400).json({ 
+        message: `Não é possível comprar mais de ${qntdAtivoDisp} ${codAtivo}`,
+      }); 
+    }
+
+    next();
+  },
+
+  qntdBuyValidation: async (req, res, next) => {
+    const { CodCliente: codCliente, QntdAtivo: qntdAtivoCompra, CodAtivo: codAtivo } = req.body;
+    const { Saldo: saldo } = await clientsService.findById(codCliente);
+    const { ValorCompra: valorCompra } = await assetsService.getByAssets(codAtivo);
+
+    if ((qntdAtivoCompra * valorCompra) > saldo) {
+      return res.status(400).json({ message: 'Saldo insuficiente' });
     }
 
     next();

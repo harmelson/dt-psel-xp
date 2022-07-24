@@ -19,18 +19,19 @@ const assetsService = {
     const { clientAsset } = await db.Client.findByPk(codCliente, {
       include: { model: db.ClientAsset, as: 'clientAsset' },
     });
-
+    
     const ativos = clientAsset.map(async (e) => {
       const asset = await assets(e.assetCode);
-      const [assetSellPrice] = asset.map((tsta) => tsta.vl_mlh_oft_venda);
-
+      const [assetSellPrice] = asset.map((el) => el.vl_mlh_oft_venda);
+      
       return { 
-      CodCliente: Number(codCliente),
-      CodAtivo: e.assetCode,
-      QtdeAtivo: e.assetQnt,
-      Valor: assetSellPrice,
+        CodCliente: Number(codCliente),
+        CodAtivo: e.assetCode,
+        QtdeAtivo: e.assetQnt,
+        Valor: assetSellPrice,
       };
-  });
+    });
+
     return Promise.all(ativos);
   },
 };
