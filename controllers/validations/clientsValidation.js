@@ -29,7 +29,7 @@ const clientsValidation = {
     const { CodCliente: codCliente, Valor: valor } = req.body;
     const { Saldo: saldo } = await clientsService.findById(codCliente);
 
-    if (!valor) return res.status(400).json({ message: 'Valor não informado' });
+    if (valor === undefined) return res.status(400).json({ message: 'Valor não informado' });
 
     if (
       typeof valor !== 'number'
