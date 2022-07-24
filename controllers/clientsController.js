@@ -19,6 +19,14 @@ const clientsController = {
 
     res.status(200).json({ message: `R$${valor} foram sacados da conta ${codCliente}` });
   },
+  sellAsset: async (req, res) => {
+    const { CodCliente: codCliente, CodAtivo: codAtivo, QntdAtivo: qntdAtivo } = req.body;
+    await clientsService.sellAsset(codCliente, codAtivo, qntdAtivo);
+
+    res.status(200).json({ 
+      message: `Cliente ${codCliente} vendeu ${qntdAtivo} ${codAtivo} com sucesso!`, 
+    });
+  },
 };
 
 module.exports = clientsController;

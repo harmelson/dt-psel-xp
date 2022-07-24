@@ -1,4 +1,5 @@
 const clientsService = require('../../services/clientsService');
+const assetsService = require('../../services/assetsService');
 
 const clientsValidation = {
   filterById: async (req, res, next) => {
@@ -44,6 +45,22 @@ const clientsValidation = {
       return res.status(400).json({ 
             message: `Valor de saque maior que saldo em conta. Saldo atual R$${saldo}`, 
       }); 
+    }
+
+    next();
+  },
+
+  sellAssetValidation: async (req, res, next) => {
+    const { CodCliente: codCliente, CodAtivo: codAtivo, QntdAtivo: qntdAtivo } = req.body;
+    const assets = await assetsService.getByClient(codCliente);
+    const sellAsset = await assets.find((el) => el.CodAtivo === codAtivo);
+
+    if (!qntdAtivo) return res.status(400).json({ message: 'Quantidade de ativos não informado' });
+
+    if (qntdAtivo > sellAsset.QtdeAtivo) {
+      return res.status(400).json(
+        { message: 'Quantidade a ser vendida não pode ser maior que quantidade em carteira' },
+      ); 
     }
 
     next();
