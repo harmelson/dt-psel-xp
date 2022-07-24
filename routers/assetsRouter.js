@@ -5,6 +5,7 @@ const assetsValidation = require('../controllers/validations/assetsValidation');
 const router = express.Router();
 
 router
-  .get('/:codAtivo', assetsValidation.filterByAssetCode, assetsController.findByAssetCode);
+  .get('/:codAtivo', assetsValidation.filterGetByAssetCode, assetsController.getByAssets)
+  .get('/cliente/:codCliente', assetsValidation.filterByClientCode, assetsController.getByClient);
 
 module.exports = router;

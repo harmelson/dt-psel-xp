@@ -8,16 +8,16 @@ const clientsController = {
     res.status(200).json(client);
   },
   sumBalance: async (req, res) => {
-    const { CodCliente, Valor } = req.body;
-    await clientsService.sumBalance(CodCliente, Valor);
+    const { CodCliente: codCliente, Valor: valor } = req.body;
+    await clientsService.sumBalance(codCliente, valor);
 
-    res.status(200).json({ message: `R$${Valor} foram adicionados na conta ${CodCliente}` });
+    res.status(200).json({ message: `R$${valor} foram adicionados na conta ${codCliente}` });
   },
   subBalance: async (req, res) => {
-    const { CodCliente, Valor } = req.body;
-    await clientsService.subBalance(CodCliente, Valor);
+    const { CodCliente: codCliente, Valor: valor } = req.body;
+    await clientsService.subBalance(codCliente, valor);
 
-    res.status(200).json({ message: `R$${Valor} foram sacados da conta ${CodCliente}` });
+    res.status(200).json({ message: `R$${valor} foram sacados da conta ${codCliente}` });
   },
 };
 

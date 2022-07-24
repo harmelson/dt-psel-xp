@@ -56,7 +56,7 @@ const clientsAssets = [
     'asset_qnt': 6000,
   },
   {
-    'asset_code': 'VIVT3',
+    'asset_code': 'VIVR3',
     'client_id': 4,
     'asset_qnt': 1100,
   },

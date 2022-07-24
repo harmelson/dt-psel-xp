@@ -21,7 +21,10 @@ const clientsValidation = {
     const { Valor: valor } = req.body;
 
     if (Number(valor) <= 0) return res.status(400).json({ message: 'Valor deve ser maior que 0' });
-
+    if (
+      typeof valor !== 'number'
+      ) return res.status(400).json({ message: 'Valor não informado ou não é um número' });    
+    
     next();
   },
 

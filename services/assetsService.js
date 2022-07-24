@@ -1,7 +1,8 @@
 const assets = require('../models/Asset');
+const db = require('../models');
 
 const assetsService = {
-  findByAssetCode: async (assetCode) => {
+  getByAssets: async (assetCode) => {
     const asset = await assets(assetCode);
     const { vl_mlh_oft_compra: valorCompra,
        vl_mlh_oft_venda: valorVenda, 
@@ -13,6 +14,24 @@ const assetsService = {
       ValorCompra: valorCompra,
       ValorVenda: valorVenda,
     };
+  },
+  getByClient: async (codCliente) => {
+    const { clientAsset } = await db.Client.findByPk(codCliente, {
+      include: { model: db.ClientAsset, as: 'clientAsset' },
+    });
+
+    const ativos = clientAsset.map(async (e) => {
+      const asset = await assets(e.assetCode);
+      const [assetSellPrice] = asset.map((tsta) => tsta.vl_mlh_oft_venda);
+
+      return { 
+      CodCliente: Number(codCliente),
+      CodAtivo: e.assetCode,
+      QtdeAtivo: e.assetQnt,
+      Valor: assetSellPrice,
+      };
+  });
+    return Promise.all(ativos);
   },
 };
 
