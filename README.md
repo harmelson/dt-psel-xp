@@ -4,6 +4,15 @@
   Aplicação construida com Node.Js, sendo que a comunicação com banco de dados foi realizada utilizando o ORM Sequelize.
   </br>
   Esta API RESTful simula o funcionamento de uma corretora de investimentos, onde é possível consultar os clientes, suas informações e seus ativos, como também é possível realizar compras e vendas de ações para cada cliente de acordo com sua carteira e seu saldo.
+  <br />
+  <br />
+  Ao estruturar o projeto, tomei a decisão de dividir o banco de dados em duas tabelas, uma de clientes e outra de ativos por cliente, tornando o código do ativo, assim como o id do cliente, as chaves primarias da segunda tabela, com isso transformando o código da ação em seu identificador único.
+  <br />
+  Para obtenção dos dados de mercado, utilizei a API pública 'api-cotacao-b3', portanto os códigos das ações e seus valores são reais, podendo apenas ter um atraso de alguns minutos na cotação.
+  <br />
+  Para que não houvesse conflito entre código da ação e código do cliente na rota '/ativos', no caso da requisição - GET - via código do cliente, é preciso utilizar o endpoint '/cliente/{código-do-cliente}', diferentemente de buscas feitas pelo código da ação, que devem ser feitas utilizando o endpoint '/{código-ação}'.
+  <br />
+  Por fim, todas as validações foram feitas na camada de controle já que está está mais proxima do cliente do que as outras.
 
 ## :hammer_and_wrench: Ferramentas
 
@@ -59,7 +68,7 @@ Tendo iniciado a aplicação como foi ensinado no bloco anterior, utilize um cli
 
 **localhost:3000/**
 
-**Exemplo de requisição: localhost:3000/conta/1**
+**Exemplo de requisição:** localhost:3000/conta/1
 
 **Observação: Todos os endpoints com o verbo POST possuem validações especificas**
 
