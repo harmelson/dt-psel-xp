@@ -7,11 +7,10 @@ const clientsService = {
     return clients;
   },
 
-  findById: async (id) => {
-    const { id: codCliente, balance, currency } = await db.Client.findByPk(id);
-    
+  findById: async (cod) => {
+    const { id, balance, currency } = await db.Client.findByPk(cod);
     return {
-      CodCliente: codCliente, Saldo: Number(balance), Moeda: currency,
+      CodCliente: id, Saldo: Number(balance), Moeda: currency,
     };
   },
 
@@ -25,7 +24,7 @@ const clientsService = {
     return subBalance;
   },
 
-  sellAsset: async (codCliente, codAtivo, qntdAtivo) => {
+  sellAsset: async (codCliente, codAtivo, qntdeAtivo) => {
     const assets = await assetsService.getByClient(codCliente);
     const sellAsset = await assets.find((el) => el.CodAtivo === codAtivo);
     // Caso sejam vendidas todas as ações, as mesmas são retiradas da tabela clients_assets
@@ -38,10 +37,11 @@ const clientsService = {
     ); 
     // Quando ações são vendidas, a quantidade de ativos do cliente é subtraida da tabela clients_assets
     await db.ClientAsset.increment( 
-      { assetQnt: Number(-qntdAtivo) }, { where: { assetCode: codAtivo, clientId: codCliente } },
+      { assetQnt: Number(-qntdeAtivo) }, { where: { assetCode: codAtivo, clientId: codCliente } },
     );
     // Após a venda, é adicionado o valor da quantidade de ativos multiplicado pelo valor de venda atual
-    await db.Client.increment({ balance: qntdAtivo * sellAsset.Valor }, {
+    
+    await db.Client.increment({ balance: qntdeAtivo * sellAsset.Valor }, {
       where: { id: codCliente }, 
     });
   },

@@ -6,7 +6,7 @@
   "scripts": {
     "runDb": "npx sequelize-cli db:drop  &&  npx sequelize-cli db:create && npx sequelize db:migrate && npx sequelize db:seed:all",
     "dev": "nodemon index.js",
-    "start": "node .",
+    "start": "npx sequelize-cli db:drop  &&  npx sequelize-cli db:create && npx sequelize db:migrate && npx sequelize db:seed:all && node .",
     "commit": "cz",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

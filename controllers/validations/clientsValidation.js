@@ -51,7 +51,7 @@ const clientsValidation = {
   },
 
   qntdAtivoValidation: async (req, res, next) => {
-    const { QntdAtivo: qntdAtivo } = req.body;
+    const { QntdeAtivo: qntdAtivo } = req.body;
 
     if (!qntdAtivo) return res.status(400).json({ message: 'Quantidade de ativos não informado' });
 
@@ -73,7 +73,7 @@ const clientsValidation = {
   },
 
   buyAssetQuantityValidation: async (req, res, next) => {
-    const { QntdAtivo: qntdAtivoCompra, CodAtivo: codAtivo } = req.body;
+    const { QntdeAtivo: qntdAtivoCompra, CodAtivo: codAtivo } = req.body;
     const { QtdeAtivo: qntdAtivoDisp } = await assetsService.getByAssets(codAtivo);
 
     if (qntdAtivoCompra > qntdAtivoDisp) {
@@ -86,7 +86,7 @@ const clientsValidation = {
   },
 
   qntdBuyValidation: async (req, res, next) => {
-    const { CodCliente: codCliente, QntdAtivo: qntdAtivoCompra, CodAtivo: codAtivo } = req.body;
+    const { CodCliente: codCliente, QntdeAtivo: qntdAtivoCompra, CodAtivo: codAtivo } = req.body;
     const { Saldo: saldo } = await clientsService.findById(codCliente);
     const { ValorCompra: valorCompra } = await assetsService.getByAssets(codAtivo);
 

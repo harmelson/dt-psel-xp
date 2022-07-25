@@ -20,7 +20,7 @@ const clientsController = {
     res.status(200).json({ message: `R$${valor} foram sacados da conta ${codCliente}` });
   },
   sellAsset: async (req, res) => {
-    const { CodCliente: codCliente, CodAtivo: codAtivo, QntdAtivo: qntdAtivo } = req.body;
+    const { CodCliente: codCliente, CodAtivo: codAtivo, QntdeAtivo: qntdAtivo } = req.body;
     await clientsService.sellAsset(codCliente, codAtivo, qntdAtivo);
 
     res.status(200).json({ 
@@ -29,7 +29,7 @@ const clientsController = {
   },
 
   buyAsset: async (req, res) => {
-    const { CodCliente: codCliente, CodAtivo: codAtivo, QntdAtivo: qntdAtivo } = req.body;
+    const { CodCliente: codCliente, CodAtivo: codAtivo, QntdeAtivo: qntdAtivo } = req.body;
 
     await clientsService.buyAsset(codCliente, codAtivo, qntdAtivo);
 
